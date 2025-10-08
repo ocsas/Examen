@@ -1,4 +1,3 @@
-# estudiante.py
 import json, os, sqlite3
 import os
 print("RUN:", os.path.abspath(__file__))
@@ -32,7 +31,7 @@ def load_json(path):
     norm = []
     for s in data:
         fecha = s.get("fecha")
-        # soporta {"$date": "..."} o string
+        
         if isinstance(fecha, dict) and "$date" in fecha:
             fecha = fecha["$date"].replace("T"," ").replace("Z","")
         norm.append({
@@ -45,7 +44,7 @@ def load_json(path):
     return norm
 
 def seed(con, rows):
-    # limpia e inserta
+   
     con.execute("DELETE FROM alumnos")
     con.executemany(
         "INSERT INTO alumnos(nombre,apellido,aprobado,nota,fecha) VALUES (?,?,?,?,?)",
@@ -58,7 +57,7 @@ if __name__ == "__main__":
     init_db(con)
     rows = load_json(JSON_PATH)
     if not rows:
-        # fallback si no hay JSON válido
+
         rows = [
             {'nombre':'Juan','apellido':'Pérez','aprobado':True,'nota':7.5,'fecha':'2024-09-01 00:00:00'},
             {'nombre':'María','apellido':'López','aprobado':False,'nota':4.2,'fecha':'2024-09-02 00:00:00'},
